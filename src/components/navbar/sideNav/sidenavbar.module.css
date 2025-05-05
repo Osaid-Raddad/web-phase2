@@ -1,0 +1,8 @@
+.sidebar {
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    background-color: #222222;
+}
+
+.mt {
+    margin-top: 56px !important;
+}
