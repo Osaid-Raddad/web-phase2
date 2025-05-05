@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './SignUp.module.css';
+import styles from './signUp.module.css';
 import { Slide, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
