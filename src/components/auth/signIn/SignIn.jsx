@@ -8,12 +8,12 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const [staySignedIn, setStaySignedIn] = useState(false);
   const navigate = useNavigate();
-
+  
   
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem('SignedInUser'));
     if (savedUser?.staySignedIn) {
-      toast.success(`Welcome back ${savedUser.username}!`, {
+      toast.success(`Welcome Back ${savedUser.username}!`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -48,10 +48,9 @@ export default function SignIn() {
       const role = foundAdmin ? 'Admin' : 'Student';
       const user = { username, role, staySignedIn };
 
-      
       localStorage.setItem('SignedInUser', JSON.stringify(user));
-
-      toast.success(`Signed in successfully ${savedUser.username}`, {
+      const i = JSON.parse(localStorage.getItem('SignedInUser'));
+      toast.success(`Signed in successfully ${i.username}`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

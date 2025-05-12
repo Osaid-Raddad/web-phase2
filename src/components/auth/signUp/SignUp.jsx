@@ -110,9 +110,8 @@ export default function SignUp() {
     setUniversityId('');
     setIsStudent(false);
     
-    setTimeout(()=>{
-        navigate('/');
-    },2000) 
+    navigate('/');
+  
   };
 
   return (

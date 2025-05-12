@@ -6,3 +6,17 @@
 .mt {
     margin-top: 56px !important;
 }
+
+.line{
+    width: 106%;
+    height: 2px;
+    background-color: darkgray;
+}
+
+.a{
+    background-color: #333;
+}
+
+.a:hover {
+    background-color: oklch(62.3% 0.214 259.815);
+}

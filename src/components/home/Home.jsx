@@ -1,4 +1,3 @@
-// Home.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './home.module.css';
 import { Chart } from 'chart.js/auto';
@@ -7,8 +6,14 @@ export default function Home() {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [stats, setStats] = useState({
+    projectCount: 0,
+    studentCount: 0,
+    taskCount: 0,
+    finishedProjectCount: 0,
+  });
 
-
+  // Update current time every second
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -27,14 +32,47 @@ export default function Home() {
     hour12: true
   });
 
+  // Fetch and calculate stats based on user role
+  useEffect(() => {
+    const getStats = () => {
+      const signedInUser = JSON.parse(localStorage.getItem('SignedInUser'));
+      const projects = JSON.parse(localStorage.getItem('projects')) || [];
+      const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      const students = JSON.parse(localStorage.getItem('Students')) || [];
 
-  const stats = {
-    projectCount: 2,
-    studentCount: 2,
-    taskCount: 2,
-    finishedProjectCount: 1
-  };
+      if (!signedInUser) return;
 
+      let projectCount = 0;
+      let taskCount = 0;
+      let finishedProjectCount = 0;
+      let studentCount = students.length;
+
+      if (signedInUser.role === 'Admin') {
+        projectCount = projects.length;
+        taskCount = tasks.length;
+        finishedProjectCount = projects.filter(p => p.status === '100%').length;
+      } else if (signedInUser.role === 'Student') {
+        const username = signedInUser.username;
+        projectCount = projects.filter(p => p.students.includes(username)).length;
+        taskCount = tasks.filter(t => t.student === username).length;
+        finishedProjectCount = projects.filter(
+          p => p.students.includes(username) && p.status === '100%'
+        ).length;
+        studentCount = '-';
+      }
+
+      setStats({
+        projectCount,
+        studentCount,
+        taskCount,
+        finishedProjectCount
+      });
+    };
+
+    getStats();
+  }, []);
+
+  // Chart update
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
 
@@ -73,15 +111,14 @@ export default function Home() {
         }
       }
     });
-  }, []);
+  }, [stats]);
 
   return (
     <div className={styles.container}>
-       <div className={styles.headerContainer}>
+      <div className={styles.headerContainer}>
         <h1 className={styles.header}>Welcome to the Task Management System</h1>
         <span className={`${styles.datetime} text-white`}>{formattedTime}</span>
       </div>
-
 
       <div className={styles.cards}>
         <div className={styles.card}><p>Number of Projects</p><h2>{stats.projectCount}</h2></div>

@@ -1,0 +1,20 @@
+.projectsTitle {
+
+    color: #2b7fff
+}
+
+h4 {
+    color: #2b7fff;
+    font-weight: bold;
+
+}
+
+h5 {
+    color: #2b7fff
+}
+
+.design {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
