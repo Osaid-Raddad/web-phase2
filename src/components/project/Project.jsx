@@ -247,7 +247,7 @@ export default function Project() {
 
             <div className="space-y-3">
               {formError && <p className="text-red-500 font-semibold">{formError}</p>}
-
+                
               <div>
                 <label className="block font-bold mb-1">Project Title:</label>
                 <input type="text" name="title" value={newProject.title} onChange={handleInputChange}
